@@ -32,11 +32,24 @@ export const App = () => {
   const [visibleData, setVisibleData] = useState(allData);
   const [activeUser, setActiveUser] = useState('All');
   const [selectedCategorys, setSelectedCategorys] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     setAllData(getAllData());
     setVisibleData(getAllData());
   }, []);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+    setVisibleData(allData
+      .filter(data => data.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase())));
+  };
+
+  const handleClearBtnClick = () => {
+    setInputValue('');
+  };
 
   const handleUserFilter = (name) => {
     if (name !== 'All') {
@@ -106,7 +119,8 @@ export const App = () => {
                   type="text"
                   className="input"
                   placeholder="Search"
-                  value="qwe"
+                  value={inputValue}
+                  onChange={handleInputChange}
                 />
 
                 <span className="icon is-left">
@@ -119,6 +133,7 @@ export const App = () => {
                     data-cy="ClearButton"
                     type="button"
                     className="delete"
+                    onClick={handleClearBtnClick}
                   />
                 </span>
               </p>
