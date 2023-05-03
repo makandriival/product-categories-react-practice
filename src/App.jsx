@@ -39,9 +39,14 @@ export const App = () => {
   }, []);
 
   const handleUserFilter = (name) => {
-    setActiveUser(name);
     if (name !== 'All') {
-      setVisibleData(visibleData.filter(cat => cat.user.name === name));
+      setActiveUser(name);
+      setVisibleData(allData
+        .filter(data => data.user.name.toLowerCase() === name.toLowerCase()));
+    }
+
+    if (name === 'All') {
+      setVisibleData(allData);
     }
   };
 
